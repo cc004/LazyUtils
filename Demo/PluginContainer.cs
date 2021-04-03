@@ -20,7 +20,7 @@ namespace Demo
 
         public override void Initialize()
         {
-            throw new NotImplementedException();
+            ConfigHelper.SetJournal<Bank>(new SqlJournal());
         }
     }
 }

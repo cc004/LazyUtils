@@ -12,15 +12,5 @@ namespace Demo
     {
         public int bank = 100;
     }
-
-    public class Record
-    {
-        public static List<Record> records;
-        public string name;
-        public int npcID, D, netID;
-        public DateTime createTime;
-    }
-
-    
 }
 
