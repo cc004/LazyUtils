@@ -80,9 +80,9 @@ namespace LazyUtils
             return false;
         }
 
-        public static void Register<T>(string[] names = null)
+        public static void Register<T>(params string[] names)
         {
-            Commands.ChatCommands.Add(new Command((args) => ParseCommand(typeof(T), args, args.Parameters), names ?? new string[] { typeof(T).Name.ToLower() }));
+            Commands.ChatCommands.Add(new Command((args) => ParseCommand(typeof(T), args, args.Parameters), names.Length > 0 ? names : new string[] { typeof(T).Name.ToLower() }));
         }
     }
 }

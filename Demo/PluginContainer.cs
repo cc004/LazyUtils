@@ -21,6 +21,7 @@ namespace Demo
         public override void Initialize()
         {
             ConfigHelper.SetJournal<Bank>(new SqlJournal());
+            CommandHelper.Register<BankCommand>("/bank");
         }
     }
 }
