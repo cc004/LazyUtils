@@ -9,13 +9,6 @@ namespace LazyUtils
 {
     public static class CompatHelper
     {
-        public static List<dynamic> GetUsers()
-        {
-            try
-            {
-                return TShock.Users.get
-            }
-        }
 
         public static string GetName(this TSPlayer player)
         {
