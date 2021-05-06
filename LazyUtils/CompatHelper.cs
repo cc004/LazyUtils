@@ -16,8 +16,6 @@ namespace LazyUtils
 
     public static class CompatHelper
     {
-        public static T Get<T>(this TSPlayer player) => ConfigHelper.Get<T>(player.GetName());
-
         public static void Error(string s)
         {
             TShock.Log.Error(s);

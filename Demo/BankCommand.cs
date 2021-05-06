@@ -13,28 +13,31 @@ namespace Demo
         [Permission("lazyutil.bank.create")]
         public static void Create(CommandArgs args)
         {
-            args.Player.Get<Bank>().bank = 100;
-            ConfigHelper.Save<Bank>();
+            using (var bank = ConfigHelper.Get<Bank>())
+                args.Player.Get(bank).bank = 100;
         }
 
         [Permission("lazyutil.bank.set")]
         public static void Set(CommandArgs args, string name, int money)
         {
-            ConfigHelper.Get<Bank>(name).bank = money;
+            using (var bank = ConfigHelper.Get<Bank>())
+                bank.Get(name).bank = money;
+
             args.Player.SendInfoMessage($"成功设定{name}的金币为{money}");
-            ConfigHelper.Save<Bank>();
         }
 
         [Permission("lazyutil.bank.query")]
         public static void Query(CommandArgs args, string name)
         {
-            args.Player.SendInfoMessage($"{name}的金币为{ConfigHelper.Get<Bank>(name).bank}");
+            using (var bank = ConfigHelper.Get<Bank>())
+                args.Player.SendInfoMessage($"{name}的金币为{bank.Get(name).bank}");
         }
 
         [Permission("lazyutil.bank.query")]
         public static void Query(CommandArgs args)
         {
-            args.Player.SendInfoMessage($"你的金币为{args.Player.Get<Bank>().bank}");
+            using (var bank = ConfigHelper.Get<Bank>())
+                args.Player.SendInfoMessage($"你的金币为{bank.Get(args.Player).bank}");
         }
     }
 
