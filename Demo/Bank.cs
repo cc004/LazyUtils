@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using LazyUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Demo
 {
-    [JsonObject]
-    public class Bank
+    public class Bank : PlayerConfigBase<Bank>
     {
         public int bank = 100;
     }

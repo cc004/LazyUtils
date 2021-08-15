@@ -26,7 +26,7 @@ namespace LazyUtils
             foreach (var method in t.GetMethods(BindingFlags.Public | BindingFlags.Static))
             {
                 var lst = args;
-                if (method.Name != "main")
+                if (method.Name != "Main")
                 {
                     if (args.FirstOrDefault() != method.Name.ToLower())
                         continue;

@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Language Name="Chinese (Mainland)">
+	<s>SEconomy初始化失败:</s>
+	<s>SEconomy:所有玩家共计有{0}。</s>
+	<s>blah</s>
+	<!-- SEconomyPlugin.cs: 4-14 -->
+	<s></s>
+	<s> * http://plugins.tw.id.au</s>
+	<s> * /sec[onomy] reload|rl - 重载SEconomy</s>
+	<s> * /sec[onomy] stop - 关闭SEconomy</s>
+	<s> * /sec[onomy] start - 开启SEconomy</s>
+	<s>SEconomy 已加载。</s>
+	<s>seconomy 已停止。输入/sec start 重新开启。</s>
+	<s>SEconomy 已停止。</s>
+	<s>seconomy 已开启。输入/sec stop 关闭。</s>
+	<s>SEconomy 加载失败, 在本次会话中将不可用。</s>
+	<s>SEconomy 已开启。</s>
+	<!-- EventHandlers.cs: 15-28 -->
+	<s>你击杀了{0}，获得了{1}。</s>
+	<s>{0}击杀了你，你失去了{1}。</s>
+	<s>你{3}{0}，目标{1}。交易ID {2}</s>
+	<s>The server</s>
+	<s>转账</s>
+	<s>收到转账</s>
+	<s>你{0}{1}{2}</s>
+	<s>支出</s>
+	<s>收到</s>
+	<s>失去</s>
+	<s>获得</s>
+	<s>，因</s>
+	<s>你现在拥有{0}。</s>
+	<s>seconomy async: error occurred on a task thread: </s>
+	<!-- ChatCommands.cs: 29-59 -->
+	<s>本服务器正在使用{0}</s>
+	<s>下载地址: http://plugins.tw.id.au 汉化:群190534564</s>
+	<s>你可以:</s>
+	<s>* 输入/bank bal查看你的存款.</s>
+	<s>* 输入/bank pay [玩家名] [数额] 和别的玩家进行交易</s>
+	<s>* 输入/bank bal [玩家名] 查看他人的存款.</s>
+	<s>* 输入/bank give|take [玩家名] [数额] 增加或减少他人的存款.</s>
+	<s>* 在后台输入/bank mgr开启管理界面.</s>
+	<s>* 输入/bank savejournal保存日志.</s>
+	<s>* 输入/bank loadjournal加载日志.</s>
+	<s>* 输入/bank squashjournal压缩日志.</s>
+	<s>[SEconomy]已重置{0}的账户.</s>
+	<s>[SEconomy]重置完毕.</s>
+	<s>[SEconomy]找不到玩家\"{0}\"的账户.</s>
+	<s>[SEconomy]你没有执行此操作的权限.</s>
+	<s>[SEconomy]你的账户已被停用.</s>
+	<s>[SEconomy]存款:{0} {1}</s>
+	<s>(已停用)</s>
+	<s>[SEconomy]找不到该玩家的账户.</s>
+	<s>[SEconomy]打开管理界面.</s>
+	<s>[SEconomy]管理界面异常退出:</s>
+	<s>[SEconomy]管理界面已关闭.</s>
+	<s>[SEconomy]只有后台可以使用管理界面.</s>
+	<s>[SEconomy]正在备份交易记录.</s>
+	<s>[SEconomy]正在加载交易记录.</s>
+	<s>[SEconomy]你没有权限压缩交易记录.</s>
+	<s>[SEconomy]找不到玩家{0}.</s>
+	<s>[SEconomy]\"{0}\"不是一个合适的数额.</s>
+	<s>[SEconomy]用法: /bank pay [玩家名] [数额]</s>
+	<s>[SEconomy]你没有权限执行此操作.</s>
+	<s>[SEconomy]用法: /bank give|take [玩家] [数额]</s>
+	<s>[SEconomy]你没有权限执行此操作.</s>
+	<!-- XmlTransactionJournal.cs: 60-84 -->
+	<s>世界{0}的世界账户已停用. 货币系统已停止工作.</s>
+	<s>世界账户加载时出现错误. 货币系统已停止工作.</s>
+	<s>
+		这是SEconomy交易记录文件。
+
+		你现在应该能看出来这是XML格式的。这个文件储存着服务器中所有的支出和收入。
+		这个文件并不是时刻被写入的，所有的交易都在内存中完成，并仅在备份时被写入
+		到这个文件中。
+
+		修改这个文件并不能修改账户余额，因为你还需要执行/bank loadjournal 命令使
+		使其生效。不过你需要注意，这么做的话，服务器将失去上次备份到现在所发生的
+		交易。一般来说，这可以被称为回档。
+
+		Obviously it would be retarded to use that command on a journal that is months old.....
+	</s>
+	<s>
+		BankAccounts Collection
+
+		This element holds all the bank accounts for a running server. Each BankAccount has a unique account number (starting from 1) and more attributes:
+
+		* UserAccountName - The login name of the TShock account this bank account is linked to
+		* WorldID - The WorldID that the account was created from, this is used when LockedToWorld is set and you want to lock bank accounts to worlds, otherwise they
+		are static and are loaded in whichever world you create on the server.
+		* Flags - A bit-bashed set of flags for the account that control the state of it.  Look in the source for BankAccountFlags for a definition of what the bits do.
+
+		Please note, BankAccount elements do not keep a running total of their balance, that is done through summing all Transaction amounts
+		(by XPath /Journal/Transactions/Transaction[@BankAccountFK=BankAccountK]/@Amount) linked to this account.
+	</s>
+	<s>
+		Transaction Collection
+
+		This element holds all the transactions for the current running server.  Each transaction is double-entry accounted,
+		which means that a transaction is essentially done twice, representing the loss of money on one account, and the gain
+		of money in the destination account or vice-versa.
+
+		A double-entry account journal must have two transactions; a source and a destination, and the amounts in each must be
+		the inverse of eachother: If money is to be transferred away from a source account the source amount must be negative
+		and the destination amount must be positive; and conversely if money is to be transferred into a source account the
+		source amount must be postitive and the destination amount must be negative.
+
+		A Transaction has these following attributes:
+
+		* BankAccountTransactionK - A unique number identifying this transaction
+		* BankAccountFK - The unique identifier of the BankAccount element this transaction comes from
+		* Amount - The amount of money this transaction was for; positive for a gain in money, negative for a loss
+		* Flags - A bit-set flag of transaction options (See source for BankAccountTransferOptions for what they do)
+		* Flags2 - Unused
+		* BankAccountTransactionFK - A unique identifier of the opposite side of this double-entry transaction, therefore binding them together.
+	</s>
+	<s>[SEconomy]无法将{0}复制到{1}.</s>
+	<s>[SEconomy]正在写入记录.</s>
+	<s>[SEconomy]记录保存失败.</s>
+	<s>[SEconomy]无法删除临时文件.</s>
+	<s>[SEconomy]已备份记录.</s>
+	<s>[SEconomy]发生未知错误, 请及时备份.</s>
+	<s>[SEconomy]正在加载记录.</s>
+	<s>加载记录.</s>
+	<s>[未找到, 创建新文件]</s>
+	<s>拒绝</s>
+	<s>失败</s>
+	<s>解压日志</s>
+	<s>parsing accounts</s>
+	<s>upgrading transactions</s>
+	<s>[SEconomy]文件损坏.</s>
+	<s>[SEconomy]发生错误, 账户和交易记录已丢失.\n\n已创建新的纪录.\n旧的记录已被移动到SEconomy.journal.xml.gz.corrupt</s>
+	<s>[SEconomy]正在压缩记录.</s>
+	<s>[SEconomy]重新同步在线账户.</s>
+	<s>账户错误.</s>
+	<s>[SEconomy]你还需要{0}才能完成本次交易.</s>
+</Language>

@@ -32,26 +32,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files (x86)\tshock_4.3.26\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="linq2db, Version=3.3.0.0, Culture=neutral, PublicKeyToken=e41013125f9e410a, processorArchitecture=MSIL">
+      <HintPath>..\packages\linq2db.3.3.0\lib\net45\linq2db.dll</HintPath>
     </Reference>
     <Reference Include="OTAPI">
-      <HintPath>..\..\..\..\Program Files (x86)\tshock_4.3.26\OTAPI.dll</HintPath>
+      <HintPath>..\..\..\..\TShock.4.5.2.Terraria.1.4.2.2a\OTAPI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
     <Reference Include="TerrariaServer">
-      <HintPath>..\..\..\..\Program Files (x86)\tshock_4.3.26\TerrariaServer.exe</HintPath>
+      <HintPath>..\..\..\..\TShock.4.5.2.Terraria.1.4.2.2a\TerrariaServer.exe</HintPath>
     </Reference>
     <Reference Include="TShockAPI">
-      <HintPath>..\..\..\..\Program Files (x86)\tshock_4.3.26\ServerPlugins\TShockAPI.dll</HintPath>
+      <HintPath>..\..\..\..\TShock.4.5.2.Terraria.1.4.2.2a\ServerPlugins\TShockAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +53,10 @@
     <Compile Include="BankCommand.cs" />
     <Compile Include="PluginContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LazyUtils\LazyUtils.csproj">

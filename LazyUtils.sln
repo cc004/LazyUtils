@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyUtils", "LazyUtils\Lazy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{32FF9848-F7D2-48A2-9C7B-68D94F3181B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestCharacter", "..\..\coolq\Plugin13\RestCharacter\RestCharacter.csproj", "{1F3EB52F-6A08-46F0-83C0-A98CFD563644}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalEconomyFramework", "UniversalEconomyFramework\UniversalEconomyFramework.csproj", "{8FDD3896-7E83-4661-8171-AC730CE68BF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{32FF9848-F7D2-48A2-9C7B-68D94F3181B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32FF9848-F7D2-48A2-9C7B-68D94F3181B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32FF9848-F7D2-48A2-9C7B-68D94F3181B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F3EB52F-6A08-46F0-83C0-A98CFD563644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F3EB52F-6A08-46F0-83C0-A98CFD563644}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F3EB52F-6A08-46F0-83C0-A98CFD563644}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F3EB52F-6A08-46F0-83C0-A98CFD563644}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FDD3896-7E83-4661-8171-AC730CE68BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FDD3896-7E83-4661-8171-AC730CE68BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FDD3896-7E83-4661-8171-AC730CE68BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FDD3896-7E83-4661-8171-AC730CE68BF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
