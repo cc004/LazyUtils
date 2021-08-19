@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BeanPointCompat.cs" />
     <Compile Include="Economy.cs" />
     <Compile Include="POBCCompat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

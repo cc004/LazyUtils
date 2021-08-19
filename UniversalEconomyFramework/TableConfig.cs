@@ -8,25 +8,31 @@ using Newtonsoft.Json;
 
 namespace UniversalEconomyFramework
 {
-    public class TableConfig
+    public sealed class EcoConfig
+    {
+        public string table;
+        public float multiplier;
+    }
+
+    internal class TableConfig
     {
         private const string NEW = "economy";
         private const string CONFIG_FILE = "tshock/uef_table.json";
 
-        private Dictionary<string, string> _table;
+        private Dictionary<string, EcoConfig> _table;
 
-        private Dictionary<string, string> Table => _table = _table ?? LoadConfig();
+        private Dictionary<string, EcoConfig> _Table => _table = _table ?? LoadConfig();
 
         private void SaveConfig()
         {
-            File.WriteAllText(CONFIG_FILE, JsonConvert.SerializeObject(Table));
+            File.WriteAllText(CONFIG_FILE, JsonConvert.SerializeObject(_Table));
         }
 
-        private static Dictionary<string, string> LoadConfig()
+        private static Dictionary<string, EcoConfig> LoadConfig()
         {
             try
             {
-                return JsonConvert.DeserializeObject<Dictionary<string, string>>(
+                return JsonConvert.DeserializeObject<Dictionary<string, EcoConfig>>(
                     File.ReadAllText(CONFIG_FILE));
             }
             catch (Exception e)
@@ -36,16 +42,16 @@ namespace UniversalEconomyFramework
             }
         }
 
-        public static TableConfig TableName = new TableConfig();
+        public static TableConfig Table = new TableConfig();
 
-        public string this[string framework]
+        public EcoConfig this[string framework]
         {
             get
             {
-                if (Table.TryGetValue(framework, out var name)) return name;
-                Table[framework] = NEW;
+                if (_Table.TryGetValue(framework, out var name)) return name;
+                Table[framework] = new EcoConfig(){table = NEW, multiplier = 1f};
                 SaveConfig();
-                return NEW;
+                return Table[framework];
             }
             set => Table[framework] = value;
         }

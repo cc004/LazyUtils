@@ -25,12 +25,12 @@ namespace POBC2
         public static void UpC(string user, int data, string str = "未填写原因")
         {
             using (var query = Economy.Query(FRAMEWORK, user))
-                query.Set(e => e.bank, e => e.bank + data).Update();
+                query.Set(e => e.bank, e => e.bank + data * Economy.Multiplier(FRAMEWORK)).Update();
         }
         public static void DownC(string user, int data, string str = "未填写原因")
         {
             using (var query = Economy.Query(FRAMEWORK, user))
-                query.Set(e => e.bank, e => e.bank - data).Update();
+                query.Set(e => e.bank, e => e.bank - data * Economy.Multiplier(FRAMEWORK)).Update();
         }
 
         public static void Adduser(string user, int data, string str = "未填写原因")
@@ -41,7 +41,7 @@ namespace POBC2
         public static int QueryCurrency(string user)
         {
             using (var query = Economy.Query(FRAMEWORK, user))
-                return (int)query.Single().bank;
+                return (int)(query.Single().bank / Economy.Multiplier(FRAMEWORK));
         }
     }
 }

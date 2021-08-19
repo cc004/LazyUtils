@@ -56,12 +56,12 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal
             get
 			{
 				using (var query = Economy.Query(FRAMEWORK, UserAccountName))
-                    return (int)query.Single().bank;
+                    return (int)(query.Single().bank / Economy.Multiplier(FRAMEWORK));
 			}
             set
             {
                 using (var query = Economy.Query(FRAMEWORK, UserAccountName))
-                    query.Set(e => e.bank,  value).Update();
+                    query.Set(e => e.bank, value * Economy.Multiplier(FRAMEWORK)).Update();
             }
 		}
 
