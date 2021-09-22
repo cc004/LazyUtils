@@ -6,9 +6,25 @@ using TShockAPI;
 
 namespace LazyUtils
 {
+    public class RealPlayerAttribute : Attribute
+    {
+
+    }
+
+    public class AliasAttribute : Attribute
+    {
+        public HashSet<string> alias;
+
+        public AliasAttribute(params string[] aliases)
+        {
+            alias = new HashSet<string>(aliases);
+        }
+    }
+
     public static class CommandHelper
     {
         private const string noperm = "没有权限";
+        private const string mustreal = "你必须在游戏内使用该指令";
 
         private static bool ParseCommand(Type t, CommandArgs arg, List<string> args)
         {
@@ -28,9 +44,13 @@ namespace LazyUtils
                 var lst = args;
                 if (method.Name != "Main")
                 {
-                    if (args.FirstOrDefault() != method.Name.ToLower())
-                        continue;
-                    lst = args.Skip(1).ToList();
+                    var cmd = args.FirstOrDefault();
+                    if (method.IsDefined(typeof(AliasAttribute)) &&
+                        method.GetCustomAttribute<AliasAttribute>().alias.Contains(cmd) || cmd == method.Name.ToLower())
+                    {
+                        lst = args.Skip(1).ToList();
+                    }
+                    else continue;
                 }
 
                 List<object> objs = new List<object>();
@@ -74,6 +94,11 @@ namespace LazyUtils
                     return true;
                 }
 
+                if (method.IsDefined(typeof(RealPlayerAttribute)) && !arg.Player.RealPlayer)
+                {
+                    arg.Player.SendErrorMessage(mustreal);
+                    return true;
+                }
                 method.Invoke(null, objs.ToArray());
                 return true;
             }

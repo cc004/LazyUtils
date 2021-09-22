@@ -10,11 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LazyUtils</RootNamespace>
     <AssemblyName>LazyUtils</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,18 +35,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net, Version=0.1.4141.31969, Culture=neutral, PublicKeyToken=f3bc8f8c31beeb49, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net.0.1.0\lib\net35\BCrypt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="HttpServer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5684c2c737cd4271, processorArchitecture=MSIL">
+      <HintPath>..\packages\TerrariaServer.TShock.4.5.5\lib\net452\HttpServer.dll</HintPath>
+    </Reference>
     <Reference Include="linq2db, Version=3.3.0.0, Culture=neutral, PublicKeyToken=e41013125f9e410a, processorArchitecture=MSIL">
       <HintPath>..\packages\linq2db.3.3.0\lib\net45\linq2db.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Sqlite, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\TShock.4.5.2.Terraria.1.4.2.2a\Mono.Data.Sqlite.dll</HintPath>
+      <HintPath>..\packages\TerrariaServer.TShock.4.5.5\lib\net452\Mono.Data.Sqlite.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\MySql.Data.dll</HintPath>
+    <Reference Include="MySql.Data, Version=6.9.12.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.9.12\lib\net45\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="OTAPI">
-      <HintPath>..\..\..\..\tshock\OTAPI.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OTAPI, Version=1.4.2.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TerrariaServer.TShock.4.5.5\lib\net452\OTAPI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -58,11 +67,11 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TerrariaServer">
-      <HintPath>..\..\..\..\tshock\TerrariaServer.exe</HintPath>
+    <Reference Include="TerrariaServer, Version=1.4.2.3, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\TerrariaServer.TShock.4.5.5\lib\net452\TerrariaServer.exe</HintPath>
     </Reference>
-    <Reference Include="TShockAPI">
-      <HintPath>..\..\..\..\tshock\TShockAPI.dll</HintPath>
+    <Reference Include="TShockAPI, Version=4.5.5.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\TerrariaServer.TShock.4.5.5\lib\net452\TShockAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +83,7 @@
     <Compile Include="PlayerConfigBase.cs" />
     <Compile Include="PluginContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
