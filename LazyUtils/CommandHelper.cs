@@ -102,7 +102,16 @@ namespace LazyUtils
                 method.Invoke(null, objs.ToArray());
                 return true;
             }
-            return false;
+            var method2 = t.GetMethod("Default", BindingFlags.Public | BindingFlags.Static);
+            if (method2 == null) return false;
+            if (method2.IsDefined(typeof(Permission)) && !arg.Player.HasPermission(method2.GetCustomAttribute<Permission>().Name))
+            {
+                arg.Player.SendErrorMessage(noperm);
+                return true;
+            }
+
+            method2.Invoke(null, new object[] { arg });
+            return true;
         }
 
         public static void Register<T>(params string[] names)
