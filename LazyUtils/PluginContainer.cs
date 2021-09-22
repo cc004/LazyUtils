@@ -1,15 +1,21 @@
+using OTAPI;
 using Terraria;
 using TerrariaApi.Server;
+using TShockAPI;
 
 namespace LazyUtils
 {
     [ApiVersion(2, 1)]
-    public class PluginContainer : TerrariaPlugin
+    public class LazyPlugin : TerrariaPlugin
     {
+        public static long timer;
         public override string Name => "LazyUtils";
 
-        public PluginContainer(Main game) : base(game) { }
+        public LazyPlugin(Main game) : base(game) { }
 
-        public override void Initialize() { }
+        public override void Initialize()
+        {
+            ServerApi.Hooks.GamePostUpdate.Register(this, _ => ++timer);
+        }
     }
 }
