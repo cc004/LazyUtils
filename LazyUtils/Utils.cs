@@ -27,7 +27,7 @@ namespace LazyUtils
         {
             var tuple = FindItemRef(item);
             if (tuple == null) return;
-            TShock.Players[tuple.Item1].SendData(PacketTypes.PlayerSlot, "", tuple.Item1, tuple.Item2, 0f, 0f, 0);
+            TShock.Players[tuple.Item1].SendData(PacketTypes.PlayerSlot, "", tuple.Item1, tuple.Item2);
         }
 
         private static Tuple<int, int> FindItemRef(object item)

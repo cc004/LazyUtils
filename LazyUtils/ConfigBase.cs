@@ -19,11 +19,13 @@ namespace LazyUtils
 
             private static IDataProvider GetProvider()
             {
-                if (TShock.DB is SqliteConnection)
-                    return new SQLiteDataProvider("");
-                if (TShock.DB is MySqlConnection)
-                    return new MySqlDataProvider("");
-                return null;
+                switch (TShock.DB.GetSqlType())
+                {
+                    case SqlType.Mysql: return new MySqlDataProvider(string.Empty);
+                    case SqlType.Sqlite: return new SQLiteDataProvider(string.Empty);
+                    default:
+                        return null;
+                }
             }
 
             public Context(string tableName) : base(GetProvider(), TShock.DB.ConnectionString)

@@ -44,8 +44,12 @@ namespace LazyUtils
         public static void Register<T>(string name)
         {
             foreach (var method in typeof(T).GetMethods())
-                TShock.RestApi.Register(new SecureRestCommand($"/{name}/{method.Name}", args => ParseCommand(method, args),
-                    method.GetCustomAttribute<Permission>().Name));
+                if (method.IsDefined(typeof(Permission)))
+                {
+                    TShock.RestApi.Register(new SecureRestCommand($"/{name}/{method.Name}", args => ParseCommand(method, args),
+                        method.GetCustomAttribute<Permission>().Name));
+                    TShock.Log.ConsoleInfo($"rest endpoint registered: /{name}/{method.Name}");
+                }
         }
     }
 }

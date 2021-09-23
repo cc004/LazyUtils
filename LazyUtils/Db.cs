@@ -6,20 +6,6 @@ namespace LazyUtils
 {
     public static class Db
     {
-        internal class DbConnection { }
-        internal class DbDataReader { }
-        internal class DbParameter { }
-        internal class DbCommand { }
-        internal class DbTransaction { }
-
-        static Db()
-        {
-            var obj = typeof(SQLiteProviderAdapter).GetMethod("CreateAdapter", BindingFlags.NonPublic | BindingFlags.Static)
-                .Invoke(null, new object[] { Assembly.GetExecutingAssembly().FullName, "LazyUtils", "Db+Db" });
-            typeof(SQLiteProviderAdapter).GetField("_microsoftDataSQLite", BindingFlags.NonPublic | BindingFlags.Static)
-                .SetValue(null, obj);
-        }
-
         public static PlayerConfigBase<T>.Context PlayerContext<T>(string tableName = null) where T : PlayerConfigBase<T> => PlayerConfigBase<T>.GetContext(tableName);
         
         public static ConfigBase<T>.Context Context<T>(string tableName = null) where T : ConfigBase<T> => ConfigBase<T>.GetContext(tableName);
