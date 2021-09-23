@@ -13,11 +13,11 @@ namespace LazyUtils
     public abstract class Config<T> where T : Config<T>, new()
     {
         private static T _instance;
-        protected abstract string Filename { get; }
+        protected virtual string Filename => typeof(T).Namespace;
         private static T GetConfig()
         {
             var t = new T();
-            var file = Path.Combine(TShock.SavePath, t.Filename);
+            var file = Path.Combine(TShock.SavePath, t.Filename + ".json");
             if (File.Exists(file)) return JsonConvert.DeserializeObject<T>(File.ReadAllText(file));
             File.WriteAllText(file, JsonConvert.SerializeObject(t));
             return t;
