@@ -21,7 +21,7 @@ namespace LazyUtils
 
                 return Config.Where(t => t.name == name);
             }
-            public IQueryable<T> Get(TSPlayer player) => Get(player.GetName());
+            public IQueryable<T> Get(TSPlayer player) => Get(player.Account.Name);
 
             public Context(string tableName) : base(tableName)
             {

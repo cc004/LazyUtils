@@ -16,6 +16,6 @@ namespace LazyUtils
             return new DisposableQuery<T>(context.Get(name), context);
         }
 
-        public static DisposableQuery<T> Get<T>(this TSPlayer player, string tableName = null) where T : PlayerConfigBase<T> => Get<T>(player.GetName(), tableName);
+        public static DisposableQuery<T> Get<T>(this TSPlayer player, string tableName = null) where T : PlayerConfigBase<T> => Get<T>(player.Account.Name, tableName);
     }
 }

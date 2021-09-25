@@ -71,7 +71,6 @@
     <Compile Include="Config.cs" />
     <Compile Include="RestHelper.cs" />
     <Compile Include="CommandHelper.cs" />
-    <Compile Include="CompatHelper.cs" />
     <Compile Include="ConfigBase.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="DisposableQuery.cs" />
