@@ -22,6 +22,7 @@ namespace LazyUtils
             var field = typeof(Main).Assembly.GetType(@class).GetField(s.Last(), BindingFlags.Static | BindingFlags.Public);
             return () => (bool)field.GetValue(null);
         }
+
         public static Func<bool> Eval(List<string> include,List<string> exclude)
         {
             var exps = new List<Func<bool>>();
