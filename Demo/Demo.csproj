@@ -36,16 +36,16 @@
       <HintPath>..\packages\linq2db.3.3.0\lib\net45\linq2db.dll</HintPath>
     </Reference>
     <Reference Include="OTAPI">
-      <HintPath>..\..\..\..\TShock.4.5.2.Terraria.1.4.2.2a\OTAPI.dll</HintPath>
+      <HintPath>..\..\refs\OTAPI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="TerrariaServer">
-      <HintPath>..\..\..\..\TShock.4.5.2.Terraria.1.4.2.2a\TerrariaServer.exe</HintPath>
+      <HintPath>..\..\refs\TerrariaServer.exe</HintPath>
     </Reference>
     <Reference Include="TShockAPI">
-      <HintPath>..\..\..\..\TShock.4.5.2.Terraria.1.4.2.2a\ServerPlugins\TShockAPI.dll</HintPath>
+      <HintPath>..\..\refs\TShockAPI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

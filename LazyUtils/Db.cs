@@ -7,7 +7,7 @@ namespace LazyUtils
     public static class Db
     {
         public static PlayerConfigBase<T>.Context PlayerContext<T>(string tableName = null) where T : PlayerConfigBase<T> => PlayerConfigBase<T>.GetContext(tableName);
-        
+
         public static ConfigBase<T>.Context Context<T>(string tableName = null) where T : ConfigBase<T> => ConfigBase<T>.GetContext(tableName);
 
         public static DisposableQuery<T> Get<T>(string name, string tableName = null) where T : PlayerConfigBase<T>
