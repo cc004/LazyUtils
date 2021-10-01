@@ -30,14 +30,11 @@ namespace LazyUtils
             return t;
         }
 
-        private static void OnReload(ReloadEventArgs args) => Reload();
-
         static Config()
         {
-                GeneralHooks.ReloadEvent += OnReload;
+                GeneralHooks.ReloadEvent += (ReloadEventArgs)=> _instance = GetConfig(); ;
         }
 
         public static T Instance => _instance = _instance ?? GetConfig();
-        public static void Reload() => _instance = GetConfig();
     }
 }
