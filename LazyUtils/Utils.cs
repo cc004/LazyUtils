@@ -15,28 +15,21 @@ namespace LazyUtils
 {
     public static class Utils
     {
-        public static Func<bool> Eval(string expression)
+        
+        public static bool Eval(string expression)
         {
-            var s = expression.Split('.');
-            var @class = string.Join(".", s.Take(s.Length - 1));
-            var field = typeof(Main).Assembly.GetType(@class).GetField(s.Last(), BindingFlags.Static | BindingFlags.Public);
-            return () => (bool)field.GetValue(null);
+            int idx = expression.LastIndexOf('.');
+            var @class = expression.Substring(0, idx);
+            var name = expression.Substring(idx + 1);
+            var field = typeof(Main).Assembly.GetType(@class).GetField(name, BindingFlags.Static | BindingFlags.Public);
+            return (bool)field.GetValue(null);
         }
 
-        public static Func<bool> Eval(List<string> include,List<string> exclude)
+        public static bool Eval(List<string> include,List<string> exclude)
         {
-            var exps = new List<Func<bool>>();
-            foreach (var exp in include)
-            {
-                var e = Eval(exp);
-                exps.Add(() => e());
-            }
-            foreach (var exp in exclude)
-            {
-                var e = Eval(exp);
-                exps.Add(() => !e());
-            }
-            return () => exps.All(f => f());
+            var exps = include.Select(e => Eval(e));
+            exps.Concat(exclude.Select(e => !Eval(e)));
+            return exps.All(e => e);
         }
 
         public static void Send(this Item item)
@@ -52,13 +45,8 @@ namespace LazyUtils
         }
         public static void SendStatusMessage(this TSPlayer player, string message)
         {
-            string msg = "";
-            for (int i = 1; i <= 20; i++)
-                msg += "\n";
-            msg += message;
-            for (int i = 1; i <= 20; i++)
-                msg += "\n";
-            player.SendData(PacketTypes.Status, msg);
+            string temp = new string('\n', 20);
+            player.SendData(PacketTypes.Status, temp+message+temp);
         }
 
         public static void SendPlayerUpdate(this TSPlayer player) => player.SendData(PacketTypes.PlayerUpdate, "", player.Index);

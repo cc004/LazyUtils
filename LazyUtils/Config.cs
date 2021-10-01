@@ -22,11 +22,6 @@ namespace LazyUtils
         private static T GetConfig()
         {
             var t = new T().DefaultConfig();
-            if (!hooked)
-            {
-                hooked = true;
-                GeneralHooks.ReloadEvent += OnReload;
-            }
             var file = Path.Combine(TShock.SavePath, t.Filename + ".json");
             if (File.Exists(file))
             {
@@ -39,8 +34,16 @@ namespace LazyUtils
         }
 
         private static void OnReload(ReloadEventArgs args) => Load();
-        protected abstract T DefaultConfig();
+        protected virtual T DefaultConfig() => new T();
 
+        public Config()
+        {
+            if (!hooked)
+            {
+                hooked = true;
+                GeneralHooks.ReloadEvent += OnReload;
+            }
+        }
         public static T Instance => _instance = _instance ?? GetConfig();
         public static void Load() => _instance = GetConfig();
     }
