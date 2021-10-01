@@ -12,7 +12,6 @@ namespace LazyUtils
         public override string Name => "LazyUtils";
 
         public LazyPlugin(Main game) : base(game) { }
-
         public override void Initialize()
         {
             ServerApi.Hooks.GamePostUpdate.Register(this, _ => ++timer);
