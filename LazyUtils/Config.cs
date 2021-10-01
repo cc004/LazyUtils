@@ -25,24 +25,17 @@ namespace LazyUtils
             var file = Path.Combine(TShock.SavePath, t.Filename + ".json");
             if (File.Exists(file))
             {
-                Console.WriteLine("Read");
                 return JsonConvert.DeserializeObject<T>(File.ReadAllText(file));
             }
-            Console.WriteLine("Default");
             File.WriteAllText(file, JsonConvert.SerializeObject(t,Formatting.Indented));
             return t;
         }
 
         private static void OnReload(ReloadEventArgs args) => Load();
         protected virtual T DefaultConfig() => new T();
-
-        public Config()
+        static Config()
         {
-            if (!hooked)
-            {
-                hooked = true;
                 GeneralHooks.ReloadEvent += OnReload;
-            }
         }
         public static T Instance => _instance = _instance ?? GetConfig();
         public static void Load() => _instance = GetConfig();
