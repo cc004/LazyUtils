@@ -41,7 +41,7 @@ namespace LazyUtils
 
         public static void SendCombatText(this TSPlayer player, string message, Color color, bool visableToOthers = true)
         {
-            NetMessage.SendData(119, player.TPlayer.whoAmI, visableToOthers ? -1 : player.Index, NetworkText.FromLiteral(message), (int)color.PackedValue, player.X, player.Y, 0, 0, 0, 0);
+            (visableToOthers ? TSPlayer.All : player).SendData(PacketTypes.CreateCombatTextExtended, message, (int)color.PackedValue, player.X, player.Y);
         }
         public static void SendStatusMessage(this TSPlayer player, string message)
         {
