@@ -15,21 +15,21 @@ namespace LazyUtils
 {
     public static class Utils
     {
-        
-        public static bool Eval(string expression)
+        private static readonly string combatTextFormat= new string('\n', 20)+"{0}"+new string('\n',20);
+        public static Func<bool> Eval(string expression)
         {
             int idx = expression.LastIndexOf('.');
             var @class = expression.Substring(0, idx);
             var name = expression.Substring(idx + 1);
             var field = typeof(Main).Assembly.GetType(@class).GetField(name, BindingFlags.Static | BindingFlags.Public);
-            return (bool)field.GetValue(null);
+            return ()=>(bool)field.GetValue(null);
         }
 
-        public static bool Eval(List<string> include,List<string> exclude)
+        public static Func<bool> Eval(List<string> include,List<string> exclude)
         {
-            var exps = include.Select(e => Eval(e));
-            exps.Concat(exclude.Select(e => !Eval(e)));
-            return exps.All(e => e);
+            var exps1 = include.Select(e => Eval(e));
+            var exps2=exclude.Select(e => Eval(e));
+            return () => (exps1.All(e => e()) && exps1.All(e => !e()));
         }
 
         public static void Send(this Item item)
@@ -45,8 +45,7 @@ namespace LazyUtils
         }
         public static void SendStatusMessage(this TSPlayer player, string message)
         {
-            string temp = new string('\n', 20);
-            player.SendData(PacketTypes.Status, temp+message+temp);
+            player.SendData(PacketTypes.Status,string.Format(combatTextFormat,message));
         }
 
         public static void SendPlayerUpdate(this TSPlayer player) => player.SendData(PacketTypes.PlayerUpdate, "", player.Index);

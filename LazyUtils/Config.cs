@@ -16,12 +16,11 @@ namespace LazyUtils
     {
        
         private static T _instance;
-        private static bool hooked;
         protected virtual string Filename => typeof(T).Namespace;
         
         private static T GetConfig()
         {
-            var t = new T().DefaultConfig();
+            var t = new T();
             var file = Path.Combine(TShock.SavePath, t.Filename + ".json");
             if (File.Exists(file))
             {
@@ -32,11 +31,11 @@ namespace LazyUtils
         }
 
         private static void OnReload(ReloadEventArgs args) => Load();
-        protected virtual T DefaultConfig() => new T();
         static Config()
         {
                 GeneralHooks.ReloadEvent += OnReload;
         }
+
         public static T Instance => _instance = _instance ?? GetConfig();
         public static void Load() => _instance = GetConfig();
     }
