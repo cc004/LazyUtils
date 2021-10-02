@@ -16,19 +16,19 @@ namespace LazyUtils
     public static class Utils
     {
         private static readonly string combatTextFormat= new string('\n', 20)+"{0}"+new string('\n',20);
-        public static Func<bool> Eval(string expression)
+        public static Func<T> Eval<T>(string expression)
         {
             int idx = expression.LastIndexOf('.');
             var @class = expression.Substring(0, idx);
             var name = expression.Substring(idx + 1);
             var field = typeof(Main).Assembly.GetType(@class).GetField(name, BindingFlags.Static | BindingFlags.Public);
-            return ()=>(bool)field.GetValue(null);
+            return ()=>(T)field.GetValue(null);
         }
 
         public static Func<bool> Eval(IEnumerable<string> include, IEnumerable<string> exclude)
         {
-            var exps1 = include.Select(e => Eval(e));
-            var exps2=exclude.Select(e => Eval(e));
+            var exps1 = include.Select(e => Eval<bool>(e));
+            var exps2=exclude.Select(e => Eval<bool>(e));
             return () => (exps1.All(e => e()) && exps1.All(e => !e()));
         }
 
