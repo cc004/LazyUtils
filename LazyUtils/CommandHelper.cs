@@ -114,9 +114,9 @@ namespace LazyUtils
             return true;
         }
 
-        public static void Register<T>(params string[] names)
+        internal static void Register(Type type, string[] names)
         {
-            Commands.ChatCommands.Add(new Command((args) => ParseCommand(typeof(T), args, args.Parameters), names.Length > 0 ? names : new string[] { typeof(T).Name.ToLower() }));
+            Commands.ChatCommands.Add(new Command((args) => ParseCommand(type, args, args.Parameters), names.Length > 0 ? names : new string[] { type.Name.ToLower() }));
         }
     }
 }

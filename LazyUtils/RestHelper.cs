@@ -41,9 +41,10 @@ namespace LazyUtils
             
             return method.Invoke(null, objs.ToArray());
         }
-        public static void Register<T>(string name)
+
+        internal static void Register(Type type, string name)
         {
-            foreach (var method in typeof(T).GetMethods())
+            foreach (var method in type.GetMethods())
                 if (method.IsDefined(typeof(Permission)))
                 {
                     TShock.RestApi.Register(new SecureRestCommand($"/{name}/{method.Name}", args => ParseCommand(method, args),
