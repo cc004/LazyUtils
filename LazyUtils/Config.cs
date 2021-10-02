@@ -14,7 +14,6 @@ namespace LazyUtils
 {
     public abstract class Config<T> where T : Config<T>, new()
     {
-       
         private static T _instance;
         protected virtual string Filename => typeof(T).Namespace;
         private string FullFilename => Path.Combine(TShock.SavePath, Filename + ".json");
@@ -29,7 +28,8 @@ namespace LazyUtils
             return t;
         }
 
-        static Config()
+        // .cctor is lazy load
+        public static void Load()
         {
             GeneralHooks.ReloadEvent += _ => _instance = GetConfig();
             _ = Instance;
