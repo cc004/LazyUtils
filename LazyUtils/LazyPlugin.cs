@@ -44,7 +44,7 @@ namespace LazyUtils
         public override void Initialize()
         {
         }
-
+        
         internal void AutoLoad()
         {
             foreach (var type in GetType().Assembly.GetTypes())
