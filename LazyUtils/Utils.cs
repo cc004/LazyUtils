@@ -25,7 +25,7 @@ namespace LazyUtils
             return ()=>(bool)field.GetValue(null);
         }
 
-        public static Func<bool> Eval(List<string> include,List<string> exclude)
+        public static Func<bool> Eval(IEnumerable<string> include, IEnumerable<string> exclude)
         {
             var exps1 = include.Select(e => Eval(e));
             var exps2=exclude.Select(e => Eval(e));
