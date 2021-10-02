@@ -17,22 +17,22 @@ namespace LazyUtils
        
         private static T _instance;
         protected virtual string Filename => typeof(T).Namespace;
-        
+        private string FullFilename => Path.Combine(TShock.SavePath, Filename + ".json");
+
         private static T GetConfig()
         {
             var t = new T();
-            var file = Path.Combine(TShock.SavePath, t.Filename + ".json");
+            var file = t.FullFilename;
             if (File.Exists(file))
-            {
                 return JsonConvert.DeserializeObject<T>(File.ReadAllText(file));
-            }
             File.WriteAllText(file, JsonConvert.SerializeObject(t,Formatting.Indented));
             return t;
         }
 
         static Config()
         {
-                GeneralHooks.ReloadEvent += (ReloadEventArgs)=> _instance = GetConfig(); ;
+            GeneralHooks.ReloadEvent += _ => _instance = GetConfig();
+            _ = Instance;
         }
 
         public static T Instance => _instance = _instance ?? GetConfig();
