@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Terraria;
 using TerrariaApi.Server;
+using TShockAPI;
 
 namespace LazyUtils
 {
@@ -35,6 +36,7 @@ namespace LazyUtils
     public abstract class LazyPlugin : TerrariaPlugin
     {
         public static long timer { get; internal set; }
+        public override string Name => GetType().Namespace;
         public sealed override Version Version => GetType().Assembly.GetName().Version;
 
         protected LazyPlugin(Main game) : base(game)
@@ -51,16 +53,23 @@ namespace LazyUtils
             {
                 if (type.IsDefined(typeof(ConfigAttribute), false))
                 {
-                    type.GetMethod("Load").Invoke(null, new object[0]);
+                    var name = type.BaseType.GetMethod("Load").Invoke(null, new object[0]);;
+                    TShock.Log.ConsoleInfo($"[{Name}] config registered: {name}");
+                    
                 }
                 else if (type.IsDefined(typeof(CommandAttribute), false))
                 {
-                    CommandHelper.Register(type, type.GetCustomAttributes<CommandAttribute>(false).SelectMany(attr => attr.alias).ToArray());
+                    var names = type.GetCustomAttributes<CommandAttribute>(false).SelectMany(attr => attr.alias)
+                        .ToArray();
+                    TShock.Log.ConsoleInfo($"[{Name}] command registered: {string.Join(",", names)}");
+                    CommandHelper.Register(type, names);
                 }
                 else if (type.IsDefined(typeof(RestAttribute), false))
                 {
                     foreach (var name in type.GetCustomAttributes<RestAttribute>(false).SelectMany(attr => attr.alias))
-                        RestHelper.Register(type, name);
+                    {
+                        RestHelper.Register(type, name, this);
+                    }
                 }
             }
         }

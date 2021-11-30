@@ -42,14 +42,14 @@ namespace LazyUtils
             return method.Invoke(null, objs.ToArray());
         }
 
-        internal static void Register(Type type, string name)
+        internal static void Register(Type type, string name, LazyPlugin plugin)
         {
             foreach (var method in type.GetMethods())
                 if (method.IsDefined(typeof(Permission)))
                 {
                     TShock.RestApi.Register(new SecureRestCommand($"/{name}/{method.Name}", args => ParseCommand(method, args),
                         method.GetCustomAttribute<Permission>().Name));
-                    TShock.Log.ConsoleInfo($"rest endpoint registered: /{name}/{method.Name}");
+                    TShock.Log.ConsoleInfo($"[{plugin.Name}] rest endpoint registered: /{name}/{method.Name}");
                 }
         }
     }

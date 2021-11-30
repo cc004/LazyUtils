@@ -22,14 +22,14 @@ namespace LazyUtils
             var @class = expression.Substring(0, idx);
             var name = expression.Substring(idx + 1);
             var field = typeof(Main).Assembly.GetType(@class).GetField(name, BindingFlags.Static | BindingFlags.Public);
-            return ()=>(T)field.GetValue(null);
+            return () => (T)field.GetValue(null);
         }
-
+        
         public static Func<bool> Eval(IEnumerable<string> include, IEnumerable<string> exclude)
         {
             var exps1 = include.Select(e => Eval<bool>(e));
             var exps2=exclude.Select(e => Eval<bool>(e));
-            return () => (exps1.All(e => e()) && exps1.All(e => !e()));
+            return () => (exps1.All(e => e()) && exps2.All(e => !e()));
         }
 
         public static void Send(this Item item)

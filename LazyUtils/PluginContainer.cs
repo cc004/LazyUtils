@@ -10,12 +10,10 @@ namespace LazyUtils
     [ApiVersion(2, 1)]
     public class PluginContainer : LazyPlugin
     {
-        public override string Name => "LazyUtils";
-
         public PluginContainer(Main game) : base(game) { }
         public override void Initialize()
         {
-            ServerApi.Hooks.GamePostUpdate.Register(this, _ => ++LazyPlugin.timer);
+            ServerApi.Hooks.GamePostUpdate.Register(this, _ => ++timer);
 
             foreach (var plugin in ServerApi.Plugins)
             {

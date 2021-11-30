@@ -29,10 +29,10 @@ namespace LazyUtils
         }
 
         // .cctor is lazy load
-        public static void Load()
+        public static string Load()
         {
             GeneralHooks.ReloadEvent += _ => _instance = GetConfig();
-            _ = Instance;
+            return Instance.Filename;
         }
 
         public static T Instance => _instance = _instance ?? GetConfig();
