@@ -22,13 +22,13 @@ namespace LazyUtils
                 switch (TShock.DB.GetSqlType())
                 {
                     case SqlType.Mysql: return new MySqlDataProvider(string.Empty);
-                    case SqlType.Sqlite: return new SQLiteDataProvider(string.Empty);
+                    case SqlType.Sqlite: return new SQLiteDataProvider("SQLite.Classic");
                     default:
                         return null;
                 }
             }
 
-            public Context(string tableName) : base(GetProvider(), TShock.DB.ConnectionString)
+            public Context(string tableName) : base(GetProvider(), TShock.DB.ConnectionString.Replace(",Version=3", ""))
             {
                 this.CreateTable<T>(tableName, tableOptions: TableOptions.CreateIfNotExists);
             }
