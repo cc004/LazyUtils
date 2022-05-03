@@ -12,16 +12,11 @@ using TShockAPI;
 namespace Demo
 {
     [ApiVersion(2, 1)]
-    public class PluginContainer : TerrariaPlugin
+    public class PluginContainer : LazyPlugin
     {
         public PluginContainer(Main game) : base(game)
         {
             Order = 100;
-        }
-
-        public override void Initialize()
-        {
-            CommandHelper.Register<BankCommand>("bank");
         }
     }
 }

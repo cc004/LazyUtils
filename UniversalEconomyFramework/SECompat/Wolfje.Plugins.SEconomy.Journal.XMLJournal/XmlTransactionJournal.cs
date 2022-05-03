@@ -42,7 +42,7 @@ namespace Wolfje.Plugins.SEconomy.Journal.XMLJournal
 		}
 
         public List<IBankAccount> BankAccounts =>
-            CompatHelper.GetUsers().Select(i => AddBankAccount(i.Name, 0, BankAccountFlags.Enabled, "")).ToList();
+            TShock.UserAccounts.GetUserAccounts().Select(i => AddBankAccount(i.Name, 0, BankAccountFlags.Enabled, "")).ToList();
 
         public IEnumerable<ITransaction> Transactions => new ITransaction[0];
 

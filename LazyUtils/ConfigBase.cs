@@ -22,12 +22,11 @@ namespace LazyUtils
                 switch (TShock.DB.GetSqlType())
                 {
                     case SqlType.Mysql: return new MySqlDataProvider(string.Empty);
-                    case SqlType.Sqlite: return new SQLiteDataProvider(string.Empty);
+                    case SqlType.Sqlite: return new SQLiteDataProvider("SQLite.Classic");
                     default:
                         return null;
                 }
             }
-
             public Context(string tableName) : base(GetProvider(), ConfigBase<T>.ConnectionString)
             {
                 this.CreateTable<T>(tableName, tableOptions: TableOptions.CreateIfNotExists);
@@ -36,6 +35,6 @@ namespace LazyUtils
         
         internal static Context GetContext(string tableName) => new Context(tableName);
         // ReSharper disable once StaticMemberInGenericType
-        protected static string ConnectionString = TShock.DB.ConnectionString;
+        protected static string ConnectionString = TShock.DB.ConnectionString.Replace(",Version=3", "");
     }
 }

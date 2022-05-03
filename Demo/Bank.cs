@@ -9,7 +9,7 @@ namespace Demo
 {
     public class Bank : PlayerConfigBase<Bank>
     {
-        public int bank = 100;
+        public int bank { get; set; } = 100;
     }
 }
 
