@@ -28,12 +28,14 @@ namespace LazyUtils
                 }
             }
 
-            public Context(string tableName) : base(GetProvider(), TShock.DB.ConnectionString)
+            public Context(string tableName) : base(GetProvider(), ConfigBase<T>.ConnectionString)
             {
                 this.CreateTable<T>(tableName, tableOptions: TableOptions.CreateIfNotExists);
             }
         }
         
         internal static Context GetContext(string tableName) => new Context(tableName);
+        // ReSharper disable once StaticMemberInGenericType
+        protected static string ConnectionString = TShock.DB.ConnectionString;
     }
 }
