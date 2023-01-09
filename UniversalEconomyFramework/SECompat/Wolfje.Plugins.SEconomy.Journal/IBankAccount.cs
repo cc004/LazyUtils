@@ -1,96 +1,95 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Wolfje.Plugins.SEconomy.Journal
+namespace Wolfje.Plugins.SEconomy.Journal;
+
+public interface IBankAccount
 {
-	public interface IBankAccount
-	{
-		ITransactionJournal OwningJournal
-		{
-			get;
-		}
+    ITransactionJournal OwningJournal
+    {
+        get;
+    }
 
-		long BankAccountK
-		{
-			get;
-			set;
-		}
+    long BankAccountK
+    {
+        get;
+        set;
+    }
 
-		string OldBankAccountK
-		{
-			get;
-			set;
-		}
+    string OldBankAccountK
+    {
+        get;
+        set;
+    }
 
-		string UserAccountName
-		{
-			get;
-			set;
-		}
+    string UserAccountName
+    {
+        get;
+        set;
+    }
 
-		long WorldID
-		{
-			get;
-			set;
-		}
+    long WorldID
+    {
+        get;
+        set;
+    }
 
-		BankAccountFlags Flags
-		{
-			get;
-			set;
-		}
+    BankAccountFlags Flags
+    {
+        get;
+        set;
+    }
 
-		string Description
-		{
-			get;
-			set;
-		}
+    string Description
+    {
+        get;
+        set;
+    }
 
-		Money Balance
-		{
-			get;
-			set;
-		}
+    Money Balance
+    {
+        get;
+        set;
+    }
 
-		bool IsAccountEnabled
-		{
-			get;
-		}
+    bool IsAccountEnabled
+    {
+        get;
+    }
 
-		bool IsSystemAccount
-		{
-			get;
-		}
+    bool IsSystemAccount
+    {
+        get;
+    }
 
-		bool IsLockedToWorld
-		{
-			get;
-		}
+    bool IsLockedToWorld
+    {
+        get;
+    }
 
-		bool IsPluginAccount
-		{
-			get;
-		}
+    bool IsPluginAccount
+    {
+        get;
+    }
 
-		List<ITransaction> Transactions
-		{
-			get;
-		}
+    List<ITransaction> Transactions
+    {
+        get;
+    }
 
-		ITransaction AddTransaction(ITransaction Transaction);
+    ITransaction AddTransaction(ITransaction Transaction);
 
-		void ResetAccountTransactions(long BankAccountK);
+    void ResetAccountTransactions(long BankAccountK);
 
-		Task ResetAccountTransactionsAsync(long BankAccountK);
+    Task ResetAccountTransactionsAsync(long BankAccountK);
 
-		void SyncBalance();
+    void SyncBalance();
 
-		Task SyncBalanceAsync();
+    Task SyncBalanceAsync();
 
-		BankTransferEventArgs TransferTo(IBankAccount Account, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
+    BankTransferEventArgs TransferTo(IBankAccount Account, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
 
-		Task<BankTransferEventArgs> TransferToAsync(int Index, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
+    Task<BankTransferEventArgs> TransferToAsync(int Index, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
 
-		Task<BankTransferEventArgs> TransferToAsync(IBankAccount ToAccount, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
-	}
+    Task<BankTransferEventArgs> TransferToAsync(IBankAccount ToAccount, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
 }

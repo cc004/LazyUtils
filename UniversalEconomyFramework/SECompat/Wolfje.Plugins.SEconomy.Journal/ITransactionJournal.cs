@@ -2,76 +2,75 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Wolfje.Plugins.SEconomy.Journal
+namespace Wolfje.Plugins.SEconomy.Journal;
+
+public interface ITransactionJournal : IDisposable
 {
-	public interface ITransactionJournal : IDisposable
-	{
-		SEconomy SEconomyInstance
-		{
-			get;
-			set;
-		}
+    SEconomy SEconomyInstance
+    {
+        get;
+        set;
+    }
 
-		List<IBankAccount> BankAccounts
-		{
-			get;
-		}
+    List<IBankAccount> BankAccounts
+    {
+        get;
+    }
 
-		IEnumerable<ITransaction> Transactions
-		{
-			get;
-		}
+    IEnumerable<ITransaction> Transactions
+    {
+        get;
+    }
 
-		bool JournalSaving
-		{
-			get;
-			set;
-		}
+    bool JournalSaving
+    {
+        get;
+        set;
+    }
 
-		bool BackupsEnabled
-		{
-			get;
-			set;
-		}
+    bool BackupsEnabled
+    {
+        get;
+        set;
+    }
 
-		event EventHandler<PendingTransactionEventArgs> BankTransactionPending;
+    event EventHandler<PendingTransactionEventArgs> BankTransactionPending;
 
-		event EventHandler<BankTransferEventArgs> BankTransferCompleted;
+    event EventHandler<BankTransferEventArgs> BankTransferCompleted;
 
-		IBankAccount AddBankAccount(string UserAccountName, long WorldID, BankAccountFlags Flags, string iDonoLol);
+    IBankAccount AddBankAccount(string UserAccountName, long WorldID, BankAccountFlags Flags, string iDonoLol);
 
-		IBankAccount AddBankAccount(IBankAccount Account);
+    IBankAccount AddBankAccount(IBankAccount Account);
 
-		IBankAccount GetBankAccountByName(string UserAccountName);
+    IBankAccount GetBankAccountByName(string UserAccountName);
 
-		IBankAccount GetBankAccount(long BankAccountK);
+    IBankAccount GetBankAccount(long BankAccountK);
 
-		IEnumerable<IBankAccount> GetBankAccountList(long BankAccountK);
+    IEnumerable<IBankAccount> GetBankAccountList(long BankAccountK);
 
-		Task DeleteBankAccountAsync(long BankAccountK);
+    Task DeleteBankAccountAsync(long BankAccountK);
 
-		void SaveJournal();
+    void SaveJournal();
 
-		Task SaveJournalAsync();
+    Task SaveJournalAsync();
 
-		bool LoadJournal();
+    bool LoadJournal();
 
-		Task<bool> LoadJournalAsync();
+    Task<bool> LoadJournalAsync();
 
-		void BackupJournal();
+    void BackupJournal();
 
-		Task BackupJournalAsync();
+    Task BackupJournalAsync();
 
-		Task SquashJournalAsync();
+    Task SquashJournalAsync();
 
-		BankTransferEventArgs TransferBetween(IBankAccount FromAccount, IBankAccount ToAccount, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
+    BankTransferEventArgs TransferBetween(IBankAccount FromAccount, IBankAccount ToAccount, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
 
-		Task<BankTransferEventArgs> TransferBetweenAsync(IBankAccount FromAccount, IBankAccount ToAccount, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
+    Task<BankTransferEventArgs> TransferBetweenAsync(IBankAccount FromAccount, IBankAccount ToAccount, Money Amount, BankAccountTransferOptions Options, string TransactionMessage, string JournalMessage);
 
-		IBankAccount GetWorldAccount();
+    IBankAccount GetWorldAccount();
 
-		void DumpSummary();
+    void DumpSummary();
 
-		void CleanJournal(PurgeOptions options);
-	}
+    void CleanJournal(PurgeOptions options);
 }

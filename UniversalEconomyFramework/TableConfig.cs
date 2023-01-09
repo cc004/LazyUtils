@@ -6,54 +6,53 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace UniversalEconomyFramework
+namespace UniversalEconomyFramework;
+
+public sealed class EcoConfig
 {
-    public sealed class EcoConfig
+    public string table;
+    public float multiplier;
+}
+
+internal class TableConfig
+{
+    private const string NEW = "economy";
+    private const string CONFIG_FILE = "tshock/uef_table.json";
+
+    private Dictionary<string, EcoConfig> _table;
+
+    private Dictionary<string, EcoConfig> _Table => _table = _table ?? LoadConfig();
+
+    private void SaveConfig()
     {
-        public string table;
-        public float multiplier;
+        File.WriteAllText(CONFIG_FILE, JsonConvert.SerializeObject(_Table));
     }
 
-    internal class TableConfig
+    private static Dictionary<string, EcoConfig> LoadConfig()
     {
-        private const string NEW = "economy";
-        private const string CONFIG_FILE = "tshock/uef_table.json";
-
-        private Dictionary<string, EcoConfig> _table;
-
-        private Dictionary<string, EcoConfig> _Table => _table = _table ?? LoadConfig();
-
-        private void SaveConfig()
+        try
         {
-            File.WriteAllText(CONFIG_FILE, JsonConvert.SerializeObject(_Table));
+            return JsonConvert.DeserializeObject<Dictionary<string, EcoConfig>>(
+                File.ReadAllText(CONFIG_FILE));
         }
-
-        private static Dictionary<string, EcoConfig> LoadConfig()
+        catch (Exception e)
         {
-            try
-            {
-                return JsonConvert.DeserializeObject<Dictionary<string, EcoConfig>>(
-                    File.ReadAllText(CONFIG_FILE));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("config load error :" + e);
-                throw;
-            }
+            Console.WriteLine("config load error :" + e);
+            throw;
         }
+    }
 
-        public static TableConfig Table = new TableConfig();
+    public static TableConfig Table = new TableConfig();
 
-        public EcoConfig this[string framework]
+    public EcoConfig this[string framework]
+    {
+        get
         {
-            get
-            {
-                if (_Table.TryGetValue(framework, out var name)) return name;
-                Table[framework] = new EcoConfig(){table = NEW, multiplier = 1f};
-                SaveConfig();
-                return Table[framework];
-            }
-            set => Table[framework] = value;
+            if (_Table.TryGetValue(framework, out var name)) return name;
+            Table[framework] = new EcoConfig(){table = NEW, multiplier = 1f};
+            SaveConfig();
+            return Table[framework];
         }
+        set => Table[framework] = value;
     }
 }

@@ -1,71 +1,70 @@
 using System;
 using System.Collections.Generic;
 
-namespace Wolfje.Plugins.SEconomy.Journal
+namespace Wolfje.Plugins.SEconomy.Journal;
+
+public interface ITransaction
 {
-	public interface ITransaction
-	{
-		long BankAccountTransactionK
-		{
-			get;
-			set;
-		}
+    long BankAccountTransactionK
+    {
+        get;
+        set;
+    }
 
-		long BankAccountFK
-		{
-			get;
-			set;
-		}
+    long BankAccountFK
+    {
+        get;
+        set;
+    }
 
-		Money Amount
-		{
-			get;
-			set;
-		}
+    Money Amount
+    {
+        get;
+        set;
+    }
 
-		string Message
-		{
-			get;
-			set;
-		}
+    string Message
+    {
+        get;
+        set;
+    }
 
-		BankAccountTransactionFlags Flags
-		{
-			get;
-			set;
-		}
+    BankAccountTransactionFlags Flags
+    {
+        get;
+        set;
+    }
 
-		BankAccountTransactionFlags Flags2
-		{
-			get;
-			set;
-		}
+    BankAccountTransactionFlags Flags2
+    {
+        get;
+        set;
+    }
 
-		DateTime TransactionDateUtc
-		{
-			get;
-			set;
-		}
+    DateTime TransactionDateUtc
+    {
+        get;
+        set;
+    }
 
-		long BankAccountTransactionFK
-		{
-			get;
-			set;
-		}
+    long BankAccountTransactionFK
+    {
+        get;
+        set;
+    }
 
-		IBankAccount BankAccount
-		{
-			get;
-		}
+    IBankAccount BankAccount
+    {
+        get;
+    }
 
-		ITransaction OppositeTransaction
-		{
-			get;
-		}
+    ITransaction OppositeTransaction
+    {
+        get;
+    }
 
-		Dictionary<string, object> CustomValues
-		{
-			get;
-		}
-	}
+    Dictionary<string, object> CustomValues
+    {
+        get;
+    }
 }

@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 using Terraria;
 using TerrariaApi.Server;
 
-namespace UniversalEconomyFramework
-{
-    [ApiVersion(2, 1)]
-    public class UniversalEconomyFramework : TerrariaPlugin
-    {
-        public UniversalEconomyFramework(Main game) : base(game)
-        {
-        }
+namespace UniversalEconomyFramework;
 
-        public override void Initialize()
-        {
-        }
+[ApiVersion(2, 1)]
+public class UniversalEconomyFramework : TerrariaPlugin
+{
+    public UniversalEconomyFramework(Main game) : base(game)
+    {
+    }
+
+    public override void Initialize()
+    {
     }
 }

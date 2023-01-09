@@ -9,14 +9,13 @@ using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
 
-namespace Demo
+namespace Demo;
+
+[ApiVersion(2, 1)]
+public class PluginContainer : LazyPlugin
 {
-    [ApiVersion(2, 1)]
-    public class PluginContainer : LazyPlugin
+    public PluginContainer(Main game) : base(game)
     {
-        public PluginContainer(Main game) : base(game)
-        {
-            Order = 100;
-        }
+        Order = 100;
     }
 }
