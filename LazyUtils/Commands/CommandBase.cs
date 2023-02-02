@@ -10,13 +10,13 @@ internal abstract class CommandBase
 {
     protected internal struct ParseResult
     {
-        public int unmatched;
-        public CommandBase current;
+        public readonly int unmatched;
+        public readonly CommandBase current;
 
         public ParseResult(CommandBase current, int num)
         {
             this.current = current;
-            unmatched = num;
+            this.unmatched = num;
         }
     }
 
@@ -24,36 +24,53 @@ internal abstract class CommandBase
     private const string MustReal = "你必须在游戏内使用该指令";
 
     protected string[] permissions;
-    protected bool realPlayer;
+    private readonly bool _realPlayer;
     protected string info;
 
     public abstract ParseResult TryParse(CommandArgs args, int current);
-    public override string ToString() => info;
+    public override string ToString()
+    {
+        return this.info;
+    }
 
     protected CommandBase(MemberInfo member)
     {
-        permissions = member.GetCustomAttributes<Permission>().Select(p => p.Name).ToArray();
-        if (member.GetCustomAttribute<RealPlayerAttribute>() != null) realPlayer = true;
+        this.permissions = member.GetCustomAttributes<Permission>().Select(p => p.Name).ToArray();
+        if (member.GetCustomAttribute<RealPlayerAttribute>() != null)
+        {
+            this._realPlayer = true;
+        }
     }
 
     protected CommandBase()
     {
-
+        
     }
 
-    public bool CanExec(TSPlayer plr) =>
-        !(realPlayer && plr.RealPlayer) && permissions.All(plr.HasPermission);
+    public bool CanExec(TSPlayer plr)
+    {
+        return (!this._realPlayer || plr.RealPlayer) && this.permissions.All(plr.HasPermission);
+    }
 
     protected bool CheckPlayer(TSPlayer plr)
     {
-        if (realPlayer && !plr.RealPlayer)
+        if (this._realPlayer && !plr.RealPlayer)
+        {
             plr.SendErrorMessage(MustReal);
-        else if (permissions.Any(perm => !plr.HasPermission(perm)))
+        }
+        else if (this.permissions.Any(perm => !plr.HasPermission(perm)))
+        {
             plr.SendErrorMessage(NoPerm);
+        }
         else
+        {
             return true;
+        }
+
         return false;
     }
-    protected ParseResult GetResult(int num) => new(this, num);
-
+    protected ParseResult GetResult(int num)
+    {
+        return new(this, num);
+    }
 }

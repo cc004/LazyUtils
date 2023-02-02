@@ -1,0 +1,51 @@
+name: Main
+
+on: [push, pull_request, workflow_dispatch]
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  build:
+    name: Build Plugins
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.100'
+
+      - name: Build
+        run: |
+          dotnet build -c Release
+
+      - name: CI Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Artifact
+          path: |
+            out/Release
+
+      - name: Prepare Artifact
+        id: pa
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: |
+          Compress-Archive -Path out/Release/* Artifact.zip
+          echo "TAG_NAME=v$(git rev-list --count HEAD)" >> $env:GITHUB_OUTPUT
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        with:
+          prerelease: true
+          tag_name: ${{ steps.pa.outputs.TAG_NAME }}
+          name: Release ${{ steps.pa.outputs.TAG_NAME }}
+          files: Artifact.zip

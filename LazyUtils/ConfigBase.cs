@@ -14,21 +14,24 @@ public abstract class ConfigBase<T> where T : ConfigBase<T>
 
         private static string GetProvider()
         {
-            switch (TShock.DB.GetSqlType())
+            return TShock.DB.GetSqlType() switch
             {
-                case SqlType.Mysql: return ProviderName.MySql;
-                case SqlType.Sqlite: return ProviderName.SQLiteMS;
-                default:
-                    return null;
-            }
+                SqlType.Mysql => ProviderName.MySql,
+                SqlType.Sqlite => ProviderName.SQLiteMS,
+                _ => null,
+            };
         }
         public Context(string tableName) : base(GetProvider(), ConfigBase<T>.ConnectionString)
         {
             this.CreateTable<T>(tableName, tableOptions: TableOptions.CreateIfNotExists);
         }
     }
-        
-    internal static Context GetContext(string tableName) => new (tableName);
+
+    internal static Context GetContext(string tableName)
+    {
+        return new(tableName);
+    }
+
     // ReSharper disable once StaticMemberInGenericType
     protected static string ConnectionString = TShock.DB.ConnectionString.Replace(",Version=3", "");
 }

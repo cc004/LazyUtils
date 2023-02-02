@@ -19,12 +19,18 @@ internal static class CommandHelper
             yield return a;
         }
 
-        if (flag) yield break;
+        if (flag)
+        {
+            yield break;
+        }
 
         yield return info.Name.ToLower();
     }
 
-    private static string AliasToString(string[] alias) => alias.Length == 1 ? alias[0] + " " : $"({string.Join('|', alias)}) ";
+    private static string AliasToString(string[] alias)
+    {
+        return alias.Length == 1 ? alias[0] + " " : $"({string.Join('|', alias)}) ";
+    }
 
     private static Command BuildTree(Type type, string prefix)
     {
@@ -34,19 +40,25 @@ internal static class CommandHelper
             var al = GetAlias(t).ToArray();
             var sub = BuildTree(t, prefix + AliasToString(al));
             foreach (var alias in al)
+            {
                 result.Add(alias, sub);
+            }
         }
 
         foreach (var func in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
         {
             if (func.GetCustomAttribute<MainAttribute>() != null)
+            {
                 result.Add(null, new SingleCommand(func, prefix));
+            }
             else
             {
                 var al = GetAlias(func).ToArray();
                 var sub = new SingleCommand(func, prefix + AliasToString(al));
                 foreach (var alias in al)
+                {
                     result.Add(alias, sub);
+                }
             }
         }
 
@@ -58,8 +70,11 @@ internal static class CommandHelper
     private static void ParseCommand(Command tree, CommandArgs args)
     {
         var result = tree.TryParse(args, 0);
-        if (result.unmatched == 0) return;
-        
+        if (result.unmatched == 0)
+        {
+            return;
+        }
+
         args.Player.SendInfoMessage($"most match: {result.current}");
         args.Player.SendInfoMessage("use subcommand `help` for more usage");
     }
@@ -75,7 +90,10 @@ internal static class CommandHelper
             yield return a;
         }
 
-        if (flag) yield break;
+        if (flag)
+        {
+            yield break;
+        }
 
         yield return info.Name.ToLower();
     }
@@ -84,7 +102,9 @@ internal static class CommandHelper
     internal static string[] Register(Type type)
     {
         if (!(type.IsAbstract && type.IsSealed))
+        {
             TShock.Log.ConsoleWarn($"Command `{type.FullName}` should be static");
+        }
 
         var names = GetCommandAlias(type).ToArray();
         var tree = BuildTree(type, AliasToString(names));

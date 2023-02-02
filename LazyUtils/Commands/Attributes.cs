@@ -36,6 +36,6 @@ public class AliasAttribute : Attribute
 
     public AliasAttribute(params string[] aliases)
     {
-        alias = new HashSet<string>(aliases);
+        this.alias = new HashSet<string>(aliases);
     }
 }

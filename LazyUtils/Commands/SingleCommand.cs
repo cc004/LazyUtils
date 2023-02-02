@@ -1,18 +1,18 @@
-﻿using System;
+﻿using MonoMod.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Input;
-using MonoMod.Utils;
 using TShockAPI;
 
 namespace LazyUtils.Commands;
 
 internal partial class SingleCommand : CommandBase
 {
-    private Parser[] argParsers;
-    private FastReflectionDelegate method;
+    private readonly Parser[] argParsers;
+    private readonly FastReflectionDelegate method;
 
     public SingleCommand(MethodInfo method, string infoPrefix) : base(method)
     {
@@ -27,25 +27,34 @@ internal partial class SingleCommand : CommandBase
             sb.Append($"<{p.Name}: {_friendlyName[p.ParameterType]}> ");
         }
 
-        argParsers = ap.ToArray();
-        info = sb.ToString();
+        this.argParsers = ap.ToArray();
+        this.info = sb.ToString();
         this.method = method.CreateFastDelegate();
     }
 
     public override ParseResult TryParse(CommandArgs args, int current)
     {
         var p = args.Parameters;
-        var n = argParsers.Length;
-        if (p.Count != n + current) return GetResult(Math.Abs(n + current - p.Count));
+        var n = this.argParsers.Length;
+        if (p.Count != n + current)
+        {
+            return this.GetResult(Math.Abs(n + current - p.Count));
+        }
+
         var a = new object[n + 1];
         a[0] = args;
-        var unmatched = argParsers.Where((t, i) => !t(p[current + i], out a[i + 1])).Count();
-        if (unmatched != 0) return GetResult(unmatched);
+        var unmatched = this.argParsers.Where((t, i) => !t(p[current + i], out a[i + 1])).Count();
+        if (unmatched != 0)
+        {
+            return this.GetResult(unmatched);
+        }
 
-        if (CheckPlayer(args.Player))
-            method(null, a);
+        if (this.CheckPlayer(args.Player))
+        {
+            this.method(null, a);
+        }
 
-        return GetResult(0);
+        return this.GetResult(0);
     }
-    
+
 }
