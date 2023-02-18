@@ -44,12 +44,25 @@ public abstract class LazyPlugin : TerrariaPlugin
     protected LazyPlugin(Main game) : base(game)
     {
         AutoLoad();
+        if (restToLoad.Count > 0)
+            ServerApi.Hooks.GameInitialize.Register(this, args =>
+            {
+                foreach (var type in restToLoad)
+                foreach (var name in type.GetCustomAttributes<RestAttribute>(false).SelectMany(attr => attr.alias))
+                {
+                    RestHelper.Register(type, name, this);
+                }
+
+                restToLoad.Clear();
+            });
     }
 
     public override void Initialize()
     {
     }
 
+    private readonly List<Type> restToLoad = new ();
+    
     internal void AutoLoad()
     {
         foreach (var type in this.GetType().Assembly.GetTypes())
@@ -66,10 +79,7 @@ public abstract class LazyPlugin : TerrariaPlugin
             }
             else if (type.IsDefined(typeof(RestAttribute), false))
             {
-                foreach (var name in type.GetCustomAttributes<RestAttribute>(false).SelectMany(attr => attr.alias))
-                {
-                    RestHelper.Register(type, name, this);
-                }
+                restToLoad.Add(type);
             }
         }
     }
